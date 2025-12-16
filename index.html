@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-Time Chat</title>
+  <style>
+    body { font-family: Arial; }
+    #chat { height: 300px; overflow-y: auto; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+<h2>Real-Time Chat 💬</h2>
+
+<input id="user" placeholder="Your name" /><br><br>
+
+<div id="chat"></div><br>
+
+<input id="msg" placeholder="Message" />
+<button onclick="send()">Send</button>
+
+<script>
+  const ws = new WebSocket("ws://localhost:3000");
+  const chat = document.getElementById("chat");
+
+  ws.onmessage = (event) => {
+    const messages = JSON.parse(event.data);
+    messages.forEach(m => {
+      chat.innerHTML += `<p><b>${m.user}:</b> ${m.text}</p>`;
+    });
+  };
+
+  function send() {
+    const user = document.getElementById("user").value;
+    const text = document.getElementById("msg").value;
+
+    ws.send(JSON.stringify({ user, text }));
+    document.getElementById("msg").value = "";
+  }
+</script>
+
+</body>
+</html>
