@@ -10,7 +10,7 @@ public class MongoUtil {
     public static MongoDatabase getDatabase() {
         if (database == null) {
             client = MongoClients.create(
-                "YOUR_MONGODB_ATLAS_URL"
+                "mongodb+srv://harismita:12345678h@cluster0.rbl8jge.mongodb.net/?appName=Cluster0"
             );
             database = client.getDatabase("chatdb");
         }
